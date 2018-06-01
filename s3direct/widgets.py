@@ -28,6 +28,7 @@ class S3DirectWidget(widgets.TextInput):
 
     def __init__(self, *args, **kwargs):
         self.dest = kwargs.pop('dest', None)
+        self.attrs = {}
         super(S3DirectWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, attrs=None, **kwargs):
@@ -38,6 +39,7 @@ class S3DirectWidget(widgets.TextInput):
 
         tpl = os.path.join('s3direct', 's3direct-widget.tpl')
         output = render_to_string(tpl, {
+            'class': self.attrs.get('class', '').strip(),
             'policy_url': reverse('s3direct'),
             'signing_url': reverse('s3direct-signing'),
             'element_id': self.build_attrs(attrs).get('id', '') if attrs else '',
