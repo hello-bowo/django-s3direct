@@ -16,6 +16,7 @@ class S3DirectWidget(widgets.TextInput):
 
     def __init__(self, *args, **kwargs):
         self.dest = kwargs.pop('dest', None)
+        self.attrs = {}
         super(S3DirectWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, **kwargs):
@@ -25,6 +26,7 @@ class S3DirectWidget(widgets.TextInput):
         ctx = {
             'policy_url': reverse('s3direct'),
             'signing_url': reverse('s3direct-signing'),
+            'class': self.attrs.get('class', '').strip(),
             'dest': self.dest,
             'name': name,
             'csrf_cookie_name': csrf_cookie_name,
