@@ -1,6 +1,8 @@
 {% load i18n %}
-
-<div class="{{ class }} s3direct" data-policy-url="{{ policy_url }}" data-signing-url="{{ signing_url }}" id="{{ element_id }}">
+{% if class %}
+<div class="{{class}}" id="{{element_id}}">
+{% endif %}
+<div class="s3direct" data-policy-url="{{ policy_url }}" data-signing-url="{{ signing_url }}" {% if class|length == 0 %}id="{{ element_id }}"{% endif %}>
 
   <a class="file-link" target="_blank" href="{{ file_url }}">
     {% if file_url|slice:"-3:" == "jpg" or file_url|slice:"-3:" == "png" or file_url|slice:"-4:" == "jpeg" %}
@@ -18,3 +20,7 @@
     <div class="bar"></div>
   </div>
 </div>
+
+{% if class %}
+</div>
+{% endif %}
