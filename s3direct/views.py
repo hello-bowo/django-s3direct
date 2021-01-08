@@ -4,7 +4,8 @@ from django.conf import settings
 from django.http import (HttpResponse, HttpResponseBadRequest,
                          HttpResponseForbidden, HttpResponseNotFound,
                          HttpResponseServerError)
-from django.views.decorators.csrf import csrf_protect
+# from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 try:
     from urllib.parse import unquote
@@ -14,7 +15,8 @@ from .utils import (get_aws_credentials, get_aws_v4_signature,
                     get_aws_v4_signing_key, get_s3direct_destinations, get_key)
 
 
-@csrf_protect
+# @csrf_protect
+@csrf_exempt
 @require_POST
 def get_upload_params(request):
     """Authorises user and validates given file properties."""
@@ -106,7 +108,8 @@ def get_upload_params(request):
     return HttpResponse(resp, content_type='application/json')
 
 
-@csrf_protect
+# @csrf_protect
+@csrf_exempt
 @require_POST
 def generate_aws_v4_signature(request):
     message = unquote(request.POST['to_sign'])
